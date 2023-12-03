@@ -13,8 +13,8 @@ provider "aws" {
   region     = "eu-central-1"
 }
 
-resource "aws_security_group" "web_app" {
-  name        = "web_app"
+resource "aws_security_group" "java_app" {
+  name        = "java_app"
   description = "security group"
   ingress {
     from_port   = 80
@@ -37,16 +37,16 @@ resource "aws_security_group" "web_app" {
   }
 
   tags= {
-    Name = "web_app"
+    Name = "java_app"
   }
 }
 
-resource "aws_instance" "webapp_instance" {
+resource "aws_instance" "javaapp_instance" {
   ami           = "ami-0669b163befffbdfc"
   instance_type = "t2.micro"
-  security_groups= ["web_app"]
+  security_groups= ["java_app"]
   tags = {
-    Name = "webapp_instance"
+    Name = "javaapp_instance"
   }
 }
 
