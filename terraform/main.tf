@@ -50,6 +50,14 @@
 #  }
 #}
 
+#output "instance_public_ip" {
+#  value     = aws_instance.webapp_instance.public_ip
+#  sensitive = true
+#}
+
+
+
+
 
 terraform {
   required_providers {
@@ -95,6 +103,8 @@ resource "aws_lightsail_container_service_deployment_version" "maven_app_deploym
 
   public_endpoint {
     container_name = "maven-application"
+    # Consistent with the port exposed by the Dockerfile and app.py
+    container_port = 8080
 
     health_check {
       healthy_threshold   = 2
@@ -107,8 +117,4 @@ resource "aws_lightsail_container_service_deployment_version" "maven_app_deploym
   }
 
   service_name = aws_lightsail_container_service.maven_application.name
-}
-output "instance_public_ip" {
-  value     = aws_instance.webapp_instance.public_ip
-  sensitive = true
 }
