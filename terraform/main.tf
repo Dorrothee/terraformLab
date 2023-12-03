@@ -13,8 +13,8 @@ provider "aws" {
   region     = "eu-central-1"
 }
 
-resource "aws_security_group" "java_app" {
-  name        = "java_app"
+resource "aws_security_group" "web_app" {
+  name        = "web_app"
   description = "security group"
   ingress {
     from_port   = 80
@@ -37,20 +37,20 @@ resource "aws_security_group" "java_app" {
   }
 
   tags= {
-    Name = "java_app"
+    Name = "web_app"
   }
 }
 
-resource "aws_instance" "javaapp_instance" {
+resource "aws_instance" "webapp_instance" {
   ami           = "ami-0669b163befffbdfc"
   instance_type = "t2.micro"
-  security_groups= ["java_app"]
+  security_groups= ["web_app"]
   tags = {
-    Name = "javaapp_instance"
+    Name = "webapp_instance"
   }
 }
 
 output "instance_public_ip" {
-  value     = aws_instance.javaapp_instance.public_ip
+  value     = aws_instance.webapp_instance.public_ip
   sensitive = true
 }
