@@ -79,7 +79,7 @@ variable "REPOSITORY_URI" {
 }
 
 resource "aws_lightsail_container_service" "maven_application" {
-  name = "maven-app-v2"
+  name = "maven-app"
   power = "nano"
   scale = 1
 
@@ -99,7 +99,7 @@ resource "aws_lightsail_container_service_deployment_version" "maven_app_deploym
   container {
     container_name = "maven-application"
 
-    image = "${var.REPOSITORY_URI}:maven-app-v2.maven-application.123"
+    image = "${var.REPOSITORY_URI}:latest"
 
     ports = {
       # Consistent with the port exposed by the Dockerfile and app.py
