@@ -1,0 +1,17 @@
+package org.example;
+
+import java.io.IOException;
+
+public class forterraform {
+    public static void main(String[] args) throws IOException {
+        System.out.println("\n----------------------------------------------");
+        System.out.println("1 - create and add a note");
+        System.out.println("2 - get the note with the highest priority");
+        System.out.println("3 - get the note with the highest priority and then remove it");
+        System.out.println("4 - clear the queue");
+        System.out.println("5 - get all notes and clear the queue");
+        System.out.println("0 - stop program and exit");
+        System.out.println("\n----------------------------------------------");
+        System.out.print("Choose the command to execute: ");
+    }
+}
