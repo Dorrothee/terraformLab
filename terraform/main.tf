@@ -76,7 +76,6 @@ provider "aws" {
 
 variable "REPOSITORY_URI" {
   type = string
-  default = "504306331314.dkr.ecr.eu-central-1.amazonaws.com/maven_app_repo:latest"
 }
 
 resource "aws_lightsail_container_service" "maven_application" {
@@ -100,7 +99,7 @@ resource "aws_lightsail_container_service_deployment_version" "maven_app_deploym
   container {
     container_name = "maven-application"
 
-    image = "${var.REPOSITORY_URI}:latest"
+    image = "${var.REPOSITORY_URI}"
 
     ports = {
       # Consistent with the port exposed by the Dockerfile and app.py
