@@ -91,6 +91,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           REPOSITORY_URI: ${{ secrets.REPOSITORY_URI }}
       run: |
-          export REPOSITIRY_URI=$REPOSITORY_URI
+          echo "Repository: ${{ secrets.REPOSITORY_URI }}"
           terraform apply -input=false -auto-approve -var="REPOSITORY_URI=${{ secrets.REPOSITORY_URI }}"
       working-directory: terraform
