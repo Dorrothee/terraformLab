@@ -81,7 +81,7 @@ jobs:
           REPOSITORY_URI: ${{ secrets.REPOSITORY_URI }}
       id: plan
       run: |
-          #export REPOSITIRY_URI=$REPOSITORY_URI
+          export REPOSITIRY_URI=$REPOSITORY_URI
           terraform plan -no-color -input=false -refresh=true -var="REPOSITORY_URI=${{ secrets.REPOSITORY_URI }}"
       working-directory: terraform
       
