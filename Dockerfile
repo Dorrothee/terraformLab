@@ -2,6 +2,7 @@
 FROM openjdk:17
 # Set the working directory in the container
 WORKDIR /app
+EXPOSE 8080
 # Copy the compiled Java application JAR file into the container at /app
 COPY target/lab3-1.0-SNAPSHOT.jar /app/PriorityQueueNote.jar
 # Specify the command to run your application
