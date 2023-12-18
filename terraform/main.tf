@@ -70,7 +70,8 @@ terraform {
 
 # Configure the AWS provider
 provider "aws" {
-  region     = "eu-central-1"
+  #region = "eu-central-1"
+  region = "us-east-1"
 }
 
 variable "REPOSITORY_URI" {
