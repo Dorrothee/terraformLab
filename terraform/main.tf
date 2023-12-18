@@ -79,7 +79,7 @@ variable "REPOSITORY_URI" {
 }
 
 resource "aws_lightsail_container_service" "maven_application" {
-  name = "maven-app"
+  name = "maven-app-static"
   power = "nano"
   scale = 1
 
