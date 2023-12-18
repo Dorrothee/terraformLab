@@ -99,7 +99,7 @@ resource "aws_lightsail_container_service_deployment_version" "maven_app_deploym
   container {
     container_name = "maven-application"
 
-    image = "${var.REPOSITORY_URI}:maven-app.maven-application.123"
+    image = "${var.REPOSITORY_URI}:latest"
 
     ports = {
       # Consistent with the port exposed by the Dockerfile and app.py
