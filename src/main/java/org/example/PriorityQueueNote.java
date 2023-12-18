@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class PriorityQueueNote {
     public static void main(String[] args) throws IOException {
-        //System.out.println("Hello world!");
+        System.out.println("Hello world!");
         /*NoteFunctions funcObj = new NoteFunctions();
         Scanner scanner = new Scanner(System.in);
         PriorityQueue<Note> priorityQueue = new PriorityQueue<>(Comparator.comparing(note -> note.date));
