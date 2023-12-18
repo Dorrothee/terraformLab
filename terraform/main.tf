@@ -76,6 +76,7 @@ provider "aws" {
 
 variable "REPOSITORY_URI" {
   type = string
+  default = "504306331314.dkr.ecr.eu-central-1.amazonaws.com/maven_app_repo:latest"
 }
 
 resource "aws_lightsail_container_service" "maven_application" {
