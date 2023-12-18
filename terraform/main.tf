@@ -70,8 +70,8 @@ terraform {
 
 # Configure the AWS provider
 provider "aws" {
-  #region = "eu-central-1"
-  region = "us-east-1"
+  region = "eu-central-1"
+  #region = "us-east-1"
 }
 
 variable "REPOSITORY_URI" {
@@ -80,7 +80,7 @@ variable "REPOSITORY_URI" {
 }
 
 resource "aws_lightsail_container_service" "maven_application" {
-  name = "maven-app"
+  name = "maven-app-v2"
   power = "nano"
   scale = 1
 
