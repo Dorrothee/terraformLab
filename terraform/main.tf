@@ -1,126 +1,45 @@
-#terraform {
-#  required_version = ">=0.13.0"
-#  required_providers {
-#    aws = {
-#      source  = "hashicorp/aws"
-#      version = "~> 3.0"
-#    }
-#  }
-#}
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+}
 
-# Configure the AWS provider
-#provider "aws" {
-#  region     = "eu-central-1"
-#}
+resource "aws_subnet" "subnet1" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "10.0.1.0/24"
+  availability_zone = "eu-central-1"  # replace with your AWS region
+}
 
-#resource "aws_security_group" "web_app" {
-#  name        = "web_app"
-#  description = "security group"
-#  ingress {
-#    from_port   = 80
-#    to_port     = 80
-#    protocol    = "tcp"
-#    cidr_blocks = ["0.0.0.0/0"]
-#  }
+resource "aws_subnet" "subnet2" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "10.0.2.0/24"
+  availability_zone = "eu-central-1"  # replace with your AWS region
+}
+ 
+resource "aws_security_group" "allow_all" {
+  name        = "allow_all"
+  description = "Allow all inbound traffic"
+  vpc_id      = aws_vpc.main.id
 
-# ingress {
-#    from_port   = 22
-#    to_port     = 22
-#    protocol    = "tcp"
-#    cidr_blocks = ["0.0.0.0/0"]
-#  }
-#  egress {
-#    from_port   = 0
-#    to_port     = 65535
-#    protocol    = "tcp"
-#    cidr_blocks = ["0.0.0.0/0"]
-#  }
-
-#  tags= {
-#    Name = "web_app"
-#  }
-#}
-
-#resource "aws_instance" "webapp_instance" {
-#  ami           = "ami-0669b163befffbdfc"
-#  instance_type = "t2.micro"
-#  security_groups= ["web_app"]
-#  tags = {
-#    Name = "webapp_instance"
-#  }
-#}
-
-#output "instance_public_ip" {
-#  value     = aws_instance.webapp_instance.public_ip
-#  sensitive = true
-#}
-
-
-
-
-
-terraform {
-  required_providers {
-    aws = {
-      source = "hashicorp/aws"
-      version = "5.28.0"
-    }
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
-# Configure the AWS provider
-provider "aws" {
-  region = "eu-central-1"
-  #region = "us-east-1"
-}
+resource "aws_default_route_table" "main" {
+  default_route_table_id = aws_vpc.main.default_route_table_id
 
-variable "REPOSITORY_URI" {
-  type = string
-}
-
-resource "aws_lightsail_container_service" "maven_application" {
-  name = "maven-app-static"
-  power = "nano"
-  scale = 1
-
-  private_registry_access {
-    ecr_image_puller_role {
-      is_active = true
-    }
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.gw.id
   }
-
 
   tags = {
-    version = "1.0.0"
+    Name = "main"
   }
 }
 
-resource "aws_lightsail_container_service_deployment_version" "maven_app_deployment" {
-  container {
-    container_name = "maven-application"
-
-    image = "${var.REPOSITORY_URI}:latest"
-
-    ports = {
-      # Consistent with the port exposed by the Dockerfile and app.py
-      8080 = "HTTP"
-    }
-  }
-
-  public_endpoint {
-    container_name = "maven-application"
-    # Consistent with the port exposed by the Dockerfile and app.py
-    container_port = 8080
-
-    health_check {
-      healthy_threshold   = 2
-      unhealthy_threshold = 2
-      timeout_seconds     = 2
-      interval_seconds    = 5
-      path                = "/"
-      success_codes       = "200-499"
-    }
-  }
-
-  service_name = aws_lightsail_container_service.maven_application.name
+resource "aws_internet_gateway" "gw" {
+  vpc_id = aws_vpc.main.id
 }
