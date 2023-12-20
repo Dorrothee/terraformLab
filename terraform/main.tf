@@ -71,7 +71,6 @@ terraform {
 # Configure the AWS provider
 provider "aws" {
   region = "eu-central-1"
-  #region = "us-east-1"
 }
 
 variable "REPOSITORY_URI" {
@@ -102,14 +101,13 @@ resource "aws_lightsail_container_service_deployment_version" "maven_app_deploym
     image = "${var.REPOSITORY_URI}:latest"
 
     ports = {
-      # Consistent with the port exposed by the Dockerfile and app.py
       8080 = "HTTP"
     }
   }
 
   public_endpoint {
     container_name = "maven-application"
-    # Consistent with the port exposed by the Dockerfile and app.py
+
     container_port = 8080
 
     health_check {
